@@ -17,7 +17,7 @@ Epoch count is the number of iterations until the simulation ends.
 
 ## OpenCL features used
 You need to have a device that supports `OpenCL v2.0` or higher. You will also need the official drivers for the said device.
-Also make sure that the device supports `64 bit integers`, `C11 style atomic integer operations` and `SVM` memory (coarse/fine grained).
+Also make sure that the device supports `C11 style atomic integer operations` and `SVM` memory (coarse/fine grained).
 
 The program might crash if these features are not supported. **Use a different device in such case!**
 
