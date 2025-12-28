@@ -17,13 +17,16 @@ Epoch count is the number of iterations until the simulation ends.
 
 ## OpenCL features used
 You need to have a device that supports `OpenCL v2.0` or higher. You will also need the official drivers for the said device.
+
 Also make sure that the device supports `C11 style atomic integer operations` and `SVM` memory (coarse/fine grained).
 
 The program might crash if these features are not supported. **Use a different device in such case!**
 
 ## Building from source
-The project uses `clang`, `llvm`, `rustc` and `cargo`. The project uses `Rust 2024 edition` and `C23`.
+On Linux, you can build the entire project by using the provided build-script.
 
-On Linux, you can build the entire project by using `build.sh`.
+The build-script(build.sh) needs `clang`, `llvm`, `rustc` and `cargo` to compile the project.
+
+This project uses `Rust 2024 edition` and `C23`.
 
 **Hope it was fun!**
