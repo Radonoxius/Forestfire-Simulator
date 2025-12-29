@@ -6,3 +6,15 @@ rustflags = [
     "-C", "lto=yes",
     "-C", "embed-bitcode=yes"
 ]
+
+[target.x86_64-pc-windows-gnullvm]
+linker = "x86_64-w64-mingw32-clang"
+rustflags = [
+    "-Lnative/build",
+    "-lstatic=compute",
+    "-lOpenCL",
+    "-lstatic=bcrypt",
+    "-lstatic=unwind",
+    "-C", "lto=yes",
+    "-C", "embed-bitcode=yes"
+]

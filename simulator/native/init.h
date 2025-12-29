@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <time.h>
 
 #include <CL/cl.h>
 
@@ -18,6 +17,64 @@ uint8_t TFF = 0;
 
 //Forest stats: Live, Burning and Dead
 uint64_t STATS[3] = { 0, 0, 0 };
+
+#ifdef _WIN64
+
+#include <windows.h>
+#include <bcrypt.h>
+#include <ntstatus.h>
+
+void generate_randoms(size_t len) {
+    NTSTATUS status;
+
+    status = BCryptGenRandom(
+        NULL,
+        (PUCHAR)TEMP,
+        (ULONG)len,
+        BCRYPT_USE_SYSTEM_PREFERRED_RNG
+    );
+
+    if (status != STATUS_SUCCESS) {
+        fprintf(stderr,
+                "BCryptGenRandom failed (NTSTATUS = 0x%08lx)\n",
+                (unsigned long)status);
+        exit(1);
+    }
+}
+
+uint64_t monotonic_time_ns(void) {
+    LARGE_INTEGER counter, freq;
+
+    QueryPerformanceCounter(&counter);
+    QueryPerformanceFrequency(&freq);
+
+    return (uint64_t)(
+        (counter.QuadPart * 1000000000ULL) / freq.QuadPart
+    );
+}
+
+#elifdef __linux__
+
+#include <sys/random.h>
+#include <time.h>
+
+void generate_randoms(const size_t len) {
+    ssize_t bytes_written = 0;
+    while (bytes_written < len) {
+        ssize_t ret_code = getrandom(
+            &TEMP[bytes_written],
+            len - bytes_written,
+            GRND_RANDOM
+        );
+
+        if (ret_code >= 0)
+            bytes_written += ret_code;
+    }
+}
+
+#else
+#error "Unsupported target platform!"
+#endif
 
 //Resets done to 0
 void reset_done(cl_command_queue queue, uint32_t* done) {
@@ -82,9 +139,7 @@ void get_randoms(
     uint8_t *buffer,
     const size_t len
 ) {
-    FILE *fp = fopen("/dev/random", "rb");
-    fread(TEMP, sizeof(uint8_t), len, fp);
-    fclose(fp);
+    generate_randoms(len);
 
     for (size_t i = 0; i < len; i++)
         TEMP[i] = (TEMP[i] < 64) ? 1 : 0;
@@ -110,9 +165,7 @@ void initialize_trees(
     const uint8_t factor,
     const bool print_enabled
 ) {
-    FILE *fp = fopen("/dev/random", "rb");
-    fread(TEMP, sizeof(uint8_t), len, fp);
-    fclose(fp);
+    generate_randoms(len);
 
     for (size_t i = 0; i < len; i++)
         TEMP[i] = (TEMP[i] <= factor && TEMP[i] >= 0) ? 1 : 0;

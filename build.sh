@@ -13,4 +13,4 @@ cd ../..
 
 cargo b --release
 
-cd ../..
+cd ..

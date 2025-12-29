@@ -181,12 +181,22 @@ uint64_t simulate(
     //Initialisation finished
 
     //Start the timer...
+    #ifdef _WIN64
+
+    uint64_t t1 = monotonic_time_ns();
+
+    #elifdef __linux__
+
     struct timespec time;
     clock_gettime(CLOCK_MONOTONIC, &time);
     uint64_t t1 = (
         (uint64_t) time.tv_sec * (uint64_t) 1'000'000'000 +
         (uint64_t) time.tv_nsec
     );
+
+    #else
+    #error "Unsupported target platform!"
+    #endif
 
     //Cuz the fun begins!
     do {
@@ -258,6 +268,13 @@ uint64_t simulate(
         epoch_count += 1;
     } while (!is_done(queue, done));
 
+    #ifdef _WIN64
+
+    uint64_t t2 = monotonic_time_ns();
+    printf("Simulation finished in: %llums.\n", (t2 - t1) / 1'000'000);
+
+    #elifdef __linux__
+
     //Stop the timer! We're done!
     clock_gettime(CLOCK_MONOTONIC, &time);
     uint64_t t2 = (
@@ -265,6 +282,10 @@ uint64_t simulate(
         (uint64_t) time.tv_nsec
     );
     printf("Simulation finished in: %lums.\n", (t2 - t1) / 1'000'000);
+
+    #else
+    #error "Unsupported target platform!"
+    #endif
 
     printf("\nStats:\n");
     printf("Initial: Alive: %lu, Burning: %lu, Dead: 0\n", STATS[0], STATS[1]);
