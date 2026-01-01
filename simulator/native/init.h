@@ -58,6 +58,7 @@ uint64_t monotonic_time_ns(void) {
 #include <sys/random.h>
 #include <time.h>
 
+//Fill `TEMP` with random numbers
 void generate_randoms(const size_t len) {
     ssize_t bytes_written = 0;
     while (bytes_written < len) {
@@ -133,7 +134,7 @@ uint8_t* get_next_tree_grid(uint8_t* a, uint8_t* b) {
         return b;
 }
 
-//Gets random bytes on linux such that, p(1) = 0.25 & p(0) = 0.75
+//Gets random bytes such that, p(1) = 0.25 & p(0) = 0.75
 void get_randoms(
     cl_command_queue queue,
     uint8_t *buffer,
