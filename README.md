@@ -10,7 +10,7 @@ You give an NxN (N = tree grid dimension) square matrix of trees initially, whic
 
 Starting factor (SF) is an 8 bit unsigned integer. A value of 255 means all trees are alive initially and 0 means all trees start off burning. Mathematically:
 
-SF = 255 - ((# burning trees)/(N ^ 2) * 255)
+`SF = 255 - ((# burning trees)/N² * 255)`
 
 A tree catches fire in the next iteration with a probability of 0.25 if at least one of its neighbouring trees is on fire.
 Burning trees become dead in the next iteration.
