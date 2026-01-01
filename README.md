@@ -24,12 +24,12 @@ You need to have an iGPU that supports `OpenCL v2.0` or higher. You will also ne
 
 Also make sure that the iGPU supports `C11 style atomic integer operations` and `SVM` memory.
 
-The program might crash if these features are not supported. **Use a different device in such cases!**
+The program might crash if these features are not supported. **Use a different device in such cases!** (It might work if youre lucky...)
 
 ## Building from source
 On Linux, you can build the entire project by using the provided build-scripts.
 
-The build-script (build.sh) needs `clang`, `llvm`, `rustc` and `cargo` to compile the project for linux (host machine, aarch64 or x64).
+The build-script (build.sh) needs `clang`, `llvm`, `rustc` and `cargo` to compile the project for linux (host machine ie, aarch64 or x64).
 
 This project can also be built for windows. To build for the windows target (x64) using the provided script, youll need the `x64-windows-gnullvm` rust target. Make sure that the `x64-MinGW64-LLVM` toolchain is also installed in a standard-system directory or is in `PATH`. Youll also require OpenCL headers and the OpenCL-ICD import library/dll. Additionally, you may have to modify `build_windows.sh` and the `rustflags` for the windows target.
 
