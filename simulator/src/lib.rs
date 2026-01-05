@@ -3,7 +3,19 @@ use std::{env, fs::OpenOptions, io::Read, path::PathBuf};
 pub mod ffi;
 
 pub fn read_shader() -> Vec<u8> {
-    let shader_path: PathBuf = [".", "shaders", "simulate.cl"].iter().collect();
+    let shader_path: PathBuf;
+
+    if cfg!(feature = "appimage") {
+        shader_path = PathBuf::from(
+            format!(
+                "{}/usr/bin/shaders/simulate.cl",
+                env::var("APPDIR").unwrap()
+            )
+        );
+    }
+    else {
+        shader_path = [".", "shaders", "simulate.cl"].iter().collect();
+    }
 
     let mut src = Vec::new();
     let mut handle = OpenOptions::new().read(true).open(shader_path).unwrap();

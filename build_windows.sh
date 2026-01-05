@@ -15,4 +15,8 @@ cargo clean
 
 cargo b --target=x86_64-pc-windows-gnullvm --release
 
+mkdir ../build 2> /dev/null
+mv target/x86_64-pc-windows-gnullvm/release/simulator.exe ../build/
+cp -r shaders ../build/
+
 cd ..

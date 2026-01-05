@@ -13,4 +13,8 @@ cd ../..
 
 cargo b --release
 
+mkdir ../build 2> /dev/null
+mv target/release/simulator ../build/
+cp -r shaders ../build/
+
 cd ..

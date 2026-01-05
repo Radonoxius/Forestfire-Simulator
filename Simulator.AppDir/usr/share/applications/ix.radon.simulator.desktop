@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Simulator
+X-AppImage-Version=0.1.0
+X-AppImage-Arch=x86_64,aarch64
+Exec=ix.radon.simulator
+Terminal=true
+Icon=appimage
+Comment=Simulate a simplistic forest fire on an iGPU
+Categories=Science;

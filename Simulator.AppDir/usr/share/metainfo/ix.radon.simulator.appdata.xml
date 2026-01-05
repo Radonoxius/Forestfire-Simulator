@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>ix.radon.simulator</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>MIT</project_license>
+	<name>Simulator</name>
+	<summary>Simulate a simplistic forest fire on an iGPU</summary>
+	<description>
+		<p>You give an NxN (N = tree grid dimension) square matrix of trees initially, which contains live trees and some burning trees (ratio being controlled by the starting factor).
+
+Starting factor (SF) is an 8 bit unsigned integer. A value of 255 means all trees are alive initially and 0 means all trees start off burning. Mathematically:
+
+SF = 255 - ((# burning trees)/(N ^ 2) * 255)
+
+A tree catches fire in the next iteration with a probability of 0.25 if at least one of its neighbouring trees is on fire.
+Burning trees become dead in the next iteration.
+
+The simulation ends when there are no burning trees left.
+
+Epoch count is the number of iterations until the simulation ends.
+
+This program simulates a forest fire on an iGPU (Integrated GPU).
+
+Sample execution command: "./Simulator-x86_64.AppImage 15 220 true"
+
+NOTE: THIS PROJECT WAS TESTED ON INTEGRATED GPUs (Intel graphics and ARM Mali-G610). IT MAY NOT WORK PROPERLY ON DISCRETE GPUs OR OTHER DEVICES.</p>
+	</description>
+	<launchable type="desktop-id">ix.radon.simulator.desktop</launchable>
+	<url type="homepage">https://github.com/Radonoxius/Forestfire-Simulator</url>
+	<provides>
+		<id>ix.radon.simulator.desktop</id>
+	</provides>
+</component>
